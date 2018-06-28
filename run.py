@@ -1,7 +1,6 @@
 from flask import Flask
 from upload import upload
 
-
 def create_app():
 
     app = Flask(__name__)
