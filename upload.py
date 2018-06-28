@@ -1,5 +1,3 @@
-# coding: utf-8
-"""Docs."""
 from flask import request
 from requests_html import HTMLSession
 from texttable import Texttable
@@ -23,9 +21,7 @@ def upload():
         csv_data = list(csv_input)
         sha = csv_data[1]
         
-        
         for i in sha:
-
             url = 'https://www.virustotal.com/#/file/'+i+'/detection'
             r=session.get(url)
             r.html.render()
@@ -37,9 +33,7 @@ def upload():
             table.add_rows([["File Name",    "File Size", "Detection Rate", "Notification", "Permalink"],
                             [filename,    filesize,    rate,   result,    url]
                             ])
-
             print(table.draw())
-        
         return 'True'
  
 
