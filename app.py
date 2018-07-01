@@ -5,14 +5,11 @@ import io, csv, json
 
 app = Flask(__name__)
 
-
 session = HTMLSession()
 session.browser
 
 def crawl(sha):
-
     for i in sha:
-
         url = 'https://www.virustotal.com/#/file/'+i+'/detection'
         r=session.get(url)
         r.html.render(sleep=0.9)
@@ -25,15 +22,9 @@ def crawl(sha):
                         [filename,    filesize,    rate,   result,    url]
                         ])
         print(table.draw())        
-        #print(rate)
-
-
-
 
 @app.route('/upload', methods=['GET','POST'])
-
 def upload():
-
     if 'file' not in request.files: 
         return json.dumps({
             'status': '400',
@@ -42,7 +33,6 @@ def upload():
     file = request.files['file']
 
     if file :
-
         stream = io.StringIO(file.stream.read().decode("UTF8"), newline=None)
         csv_input = csv.reader(stream)
         csv_data = list(csv_input)
@@ -51,10 +41,4 @@ def upload():
         return 'ok'
 
 if __name__ == '__main__':
-    app.run(debug = True)
-
-
-
-                
-     
-
+    app.run(debug = True)         
