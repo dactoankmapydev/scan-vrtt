@@ -8,10 +8,9 @@ app = Flask(__name__)
 session = HTMLSession()
 session.browser
 
-def crawl(sha):
-    for i in sha:
-        url = 'https://www.virustotal.com/#/file/'+i+'/detection'
-        r=session.get(url)
+def crawl(links):
+    for link in links:
+        r=session.get(link)
         r.html.render(sleep=0.9)
         rate = r.html.xpath('//*[@id="pages"]/vt-result-file/div/vt-result-header/section/header/div[1]/h1')[0].text.split('\n')[0]
         filename = r.html.xpath('//*[@id="file-summary"]/tbody/tr[2]/td')[0].text.split('\n')[0]
@@ -19,7 +18,7 @@ def crawl(sha):
         result = r.html.xpath('//*[@id="pages"]/vt-result-file/div/vt-result-header/section/header/div[2]/h1/div')[0].text.split('\n')[1]
         table = Texttable()
         table.add_rows([["File Name",    "File Size", "Detection Rate", "Notification", "Permalink"],
-                        [filename,    filesize,    rate,   result,    url]
+                        [filename,    filesize,    rate,   result,    link]
                         ])
         print(table.draw())        
 
@@ -37,8 +36,12 @@ def upload():
         csv_input = csv.reader(stream)
         csv_data = list(csv_input)
         sha = csv_data[1]
-        crawl(sha)
+        links = []
+        for i in sha:
+            url = 'https://www.virustotal.com/#/file/'+i+'/detection'
+            links.append(url)
+        crawl(links)
         return 'ok'
 
 if __name__ == '__main__':
-    app.run(debug = True)         
+    app.run(debug = True)
