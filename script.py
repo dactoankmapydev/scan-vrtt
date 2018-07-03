@@ -15,7 +15,7 @@ def crawl(link):
     #result = r.html.xpath('//*[@id="pages"]/vt-result-file/div/vt-result-header/section/header/div[2]/h1/div')[0].text.split('\n')[1]
     #return(filename+' '+filesize+' '+rate+' '+result)
     #return(rate)
-    session.get(link).html.render(sleep=0.9)
+    #session.get(link).html.render(sleep=0.9)
     return(session.get(link).html.xpath('//*[@id="pages"]/vt-result-file/div/vt-result-header/section/header/div[1]/h1'))
 
 
