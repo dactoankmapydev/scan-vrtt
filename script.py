@@ -1,13 +1,14 @@
 from requests_html import HTMLSession
 import csv
-import multiprocessing.dummy
 import requests, time, os
+from multiprocessing import Pool
 
-
+session = HTMLSession()
+session.browser
 
 def crawl(link):
 
-    #r=session.get(link)
+    r=session.get(link)
     #r.html.render()
     #rate = r.html.xpath('//*[@id="pages"]/vt-result-file/div/vt-result-header/section/header/div[1]/h1')[0].text.split('\n')[0]
     #filename = r.html.xpath('//*[@id="file-summary"]/tbody/tr[2]/td')[0].text.split('\n')[0]
@@ -16,8 +17,8 @@ def crawl(link):
     #return(filename+' '+filesize+' '+rate+' '+result)
     #return(rate)
     #session.get(link).html.render(sleep=0.9)
-    return(session.get(link).html.xpath('//*[@id="pages"]/vt-result-file/div/vt-result-header/section/header/div[1]/h1'))
-
+    #return(r.html.xpath('//*[@id="pages"]/vt-result-file/div/vt-result-header/section/header/div[1]/h1'))
+    return(r.status_code)
 
 if __name__ == '__main__':
 
@@ -29,12 +30,10 @@ if __name__ == '__main__':
     for i in sha:
         url = 'https://www.virustotal.com/#/file/'+i+'/detection'
         urls.append(url)
-    #print(urls)
     print("start.....")
-    thread_pool = multiprocessing.dummy.Pool(4)
+    thread_pool = Pool(4)
     start = time.time()
-    session = HTMLSession()
-    session.browser
+
 
     print(thread_pool.map(crawl, urls))
     print(str(time.time()-start)+'seconds')
