@@ -1,7 +1,7 @@
 from requests_html import HTMLSession
 import csv
 import multiprocessing.dummy
-import requests, time
+import requests, time, os
 
 
 
@@ -21,7 +21,7 @@ def crawl(link):
 
 if __name__ == '__main__':
 
-    file=open('/home/dactoankma/scanvr/scan-vrtt/logvr (copy).csv', "r")
+    file=open(os.path.join(os.getcwd(),logvr (copy).csv), "r")
     reader = csv.reader(file)
     data = list(reader)
     sha = data[1]
