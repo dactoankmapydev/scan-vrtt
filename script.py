@@ -21,7 +21,7 @@ def crawl(link):
 
 if __name__ == '__main__':
 
-    file=open(os.path.join(os.getcwd(),logvr (copy).csv), "r")
+    file=open(os.path.join(os.getcwd(),'logvr (copy).csv'), "r")
     reader = csv.reader(file)
     data = list(reader)
     sha = data[1]
