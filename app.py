@@ -1,6 +1,6 @@
-from flask import request, Flask
+from flask import Flask, render_template, request, url_for, redirect
 from requests_html import HTMLSession
-from texttable import Texttable
+#from texttable import Texttable
 import io, csv, json
 
 app = Flask(__name__)
@@ -16,11 +16,11 @@ def crawl(links):
         filename = r.html.xpath('//*[@id="file-summary"]/tbody/tr[2]/td')[0].text.split('\n')[0]
         filesize = r.html.xpath('//*[@id="file-summary"]/tbody/tr[3]/td')[0].text.split('\n')[0]
         result = r.html.xpath('//*[@id="pages"]/vt-result-file/div/vt-result-header/section/header/div[2]/h1/div')[0].text.split('\n')[1]
-        table = Texttable()
-        table.add_rows([["File Name",    "File Size", "Detection Rate", "Notification", "Permalink"],
-                        [filename,    filesize,    rate,   result,    link]
-                        ])
-        print(table.draw())        
+        #table = Texttable()
+        #table.add_rows([["File Name",    "File Size", "Detection Rate", "Notification", "Permalink"],
+        #                [filename,    filesize,    rate,   result,    link]
+        #                ])
+        #print(table.draw())        
 
 @app.route('/upload', methods=['GET','POST'])
 def upload():
@@ -42,6 +42,10 @@ def upload():
             links.append(url)
         crawl(links)
         return 'ok'
+
+@app.route('/')
+def home():
+    return render_template("choosefile.html")
 
 if __name__ == '__main__':
     app.run(debug = True)
