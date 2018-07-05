@@ -8,6 +8,7 @@ app = Flask(__name__)
 session = HTMLSession()
 session.browser
 
+
 class ItemTable(Table):
     file_name = Col('File Name')
     file_size = Col('File Size')
@@ -18,13 +19,15 @@ class ItemTable(Table):
 def crawl(links,path):
     list_res = []
     for link in links:
+        
         r=session.get(link)
         r.html.render(sleep=0.9)
         rate = r.html.xpath('//*[@id="pages"]/vt-result-file/div/vt-result-header/section/header/div[1]/h1')[0].text.split('\n')[0]
+        filetype = r.html.xpath('//*[@id="content"]/vt-file-details-basic/vt-keyval-table/div/div/div[5]/div[2]')[0].text.split('\n')[0]
         filename = r.html.xpath('//*[@id="file-summary"]/tbody/tr[2]/td')[0].text.split('\n')[0]
         filesize = r.html.xpath('//*[@id="file-summary"]/tbody/tr[3]/td')[0].text.split('\n')[0]
         result = r.html.xpath('//*[@id="pages"]/vt-result-file/div/vt-result-header/section/header/div[2]/h1/div')[0].text.split('\n')[1]  
-        res = rate,filename,filesize,result
+        res = result,rate,filesize,filetype,filename
         list_res.append(res)
 
     results = (list(zip(list_res,path)))
@@ -33,7 +36,7 @@ def crawl(links,path):
         list_result = list(result[0])
         list_result.append(result[1])
         tuple_result = tuple(list_result)
-        list_results.append(tuple_result)
+        list_results.append(tuple_result[::-1])
     print(list_results)
 
 
