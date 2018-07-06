@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="keyword"
+          content="">
+    <meta name="description" content="">
+    <meta name="author" content=""> 
+    <title></title>
+    
+    <link rel="icon" href="{{ url_for('static', filename='images/icn-dictionary.png') }}" type="image/x-icon"/>
+    
+    <link href="https://fonts.google.com/specimen/Saira+Condensed"
+          rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/main.css') }}" rel="stylesheet">
+
+</head>
+
+<body>
+{% block choosefile %}{% endblock %}
+
+
+<script src="{{ url_for('static', filename='js/fontawesome.js') }}"></script>
+</body>
+</html>
